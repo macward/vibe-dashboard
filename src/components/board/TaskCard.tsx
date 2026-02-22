@@ -33,7 +33,9 @@ export function TaskCard({ task, onClick, isDragging, isOverlay }: TaskCardProps
       style={style}
       className={cn(
         'cursor-grab active:cursor-grabbing transition-all duration-200 py-0 gap-0',
-        'border-l-4 hover:shadow-md hover:-translate-y-0.5',
+        'rounded-2xl border-l-4 shadow-sm',
+        'hover:shadow-lg hover:-translate-y-0.5',
+        'dark:shadow-sm dark:shadow-black/10 dark:hover:shadow-md dark:hover:shadow-black/20',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
         task.status === 'pending' && 'border-l-slate-400',
         task.status === 'in-progress' && 'border-l-blue-500',
