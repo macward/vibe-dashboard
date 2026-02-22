@@ -32,7 +32,7 @@ export function TaskCard({ task, onClick, isDragging, isOverlay }: TaskCardProps
       ref={setNodeRef}
       style={style}
       className={cn(
-        'cursor-grab active:cursor-grabbing transition-all duration-200',
+        'cursor-grab active:cursor-grabbing transition-all duration-200 py-0 gap-0',
         'border-l-4 hover:shadow-md hover:-translate-y-0.5',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring',
         task.status === 'pending' && 'border-l-slate-400',
@@ -47,24 +47,24 @@ export function TaskCard({ task, onClick, isDragging, isOverlay }: TaskCardProps
       {...listeners}
       {...attributes}
     >
-      <CardHeader className="pb-2 pt-3 px-3">
+      <CardHeader className="pb-2 pt-3 px-4">
         <div className="flex items-start justify-between gap-2">
-          <span className="text-xs font-mono text-muted-foreground">
+          <span className="text-[11px] font-mono tracking-wide text-muted-foreground">
             {taskNumber}
           </span>
           {task.feature && (
-            <Badge variant="secondary" className="text-xs px-1.5 py-0 transition-colors">
+            <Badge variant="secondary" className="text-xs px-2 py-0.5 font-normal transition-colors">
               {task.feature}
             </Badge>
           )}
         </div>
       </CardHeader>
-      <CardContent className="pb-3 px-3 pt-0">
-        <p className="text-sm font-medium line-clamp-2 mb-2 leading-snug">
+      <CardContent className="pb-3 px-4 pt-0">
+        <p className="text-sm font-medium line-clamp-2 mb-2 leading-relaxed">
           {taskTitle}
         </p>
 
-        <div className="flex items-center justify-between text-xs text-muted-foreground">
+        <div className="flex items-center justify-between text-xs text-muted-foreground/60 pt-2 border-t border-border/40">
           {task.owner && (
             <span className="truncate max-w-[80px]">{task.owner}</span>
           )}
