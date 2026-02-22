@@ -1,8 +1,4 @@
-{
-	auto_https off
-}
-
-:80 {
+dashboard.vibe.wardium.me {
 	reverse_proxy dashboard:8080
 
 	encode gzip
