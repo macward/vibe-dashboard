@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card'
 
 export function TaskCardSkeleton() {
   return (
-    <Card className="animate-pulse py-0 gap-0">
+    <Card className="animate-pulse py-0 gap-0 rounded-2xl">
       <CardHeader className="pb-2 pt-3 px-4">
         <div className="flex items-start justify-between gap-2">
           <div className="h-4 w-8 bg-muted rounded" />
