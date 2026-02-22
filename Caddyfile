@@ -1,0 +1,15 @@
+{
+	auto_https off
+}
+
+:80 {
+	reverse_proxy dashboard:8080
+
+	encode gzip
+
+	header {
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "strict-origin-when-cross-origin"
+	}
+}
