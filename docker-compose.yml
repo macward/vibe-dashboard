@@ -7,7 +7,7 @@ services:
         VITE_API_TOKEN: ${VITE_API_TOKEN:-}
         VITE_POLLING_INTERVAL: ${VITE_POLLING_INTERVAL:-10000}
     expose:
-      - "8080"
+      - "3000"
     restart: unless-stopped
     user: "1000:1000"
 

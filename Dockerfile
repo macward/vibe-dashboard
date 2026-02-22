@@ -30,6 +30,6 @@ COPY --chown=1000:1000 nginx.conf /etc/nginx/conf.d/default.conf
 
 USER 1000
 
-EXPOSE 8080
+EXPOSE 3000
 
 CMD ["nginx", "-g", "daemon off;"]

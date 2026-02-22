@@ -1,5 +1,5 @@
 dashboard.vibe.wardium.me {
-	reverse_proxy dashboard:8080
+	reverse_proxy dashboard:3000
 
 	encode gzip
 
