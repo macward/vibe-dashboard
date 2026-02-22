@@ -8,5 +8,7 @@ services:
         VITE_POLLING_INTERVAL: ${VITE_POLLING_INTERVAL:-10000}
     ports:
       - "8880:3000"
+    volumes:
+      - /opt/data/vibe-dash:/opt/data/vibe-dash
     restart: unless-stopped
     user: "1000:1000"
