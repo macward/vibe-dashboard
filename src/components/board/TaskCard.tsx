@@ -1,7 +1,6 @@
 import { useDraggable } from '@dnd-kit/core'
 import { CSS } from '@dnd-kit/utilities'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
-import { Badge } from '@/components/ui/badge'
 import type { Task } from '@/api/types'
 import { cn, formatRelativeTime, extractTaskNumber, extractTaskTitle } from '@/lib/utils'
 
@@ -49,28 +48,25 @@ export function TaskCard({ task, onClick, isDragging, isOverlay }: TaskCardProps
       {...listeners}
       {...attributes}
     >
-      <CardHeader className="pb-2 pt-3 px-4">
-        <div className="flex items-start justify-between gap-2">
-          <span className="text-[11px] font-mono tracking-wide text-muted-foreground">
-            {taskNumber}
+      <CardHeader className="pb-1 pt-3 px-4">
+        {task.feature && (
+          <span className="inline-block text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded-md bg-muted/80 text-muted-foreground dark:bg-muted/50 dark:text-muted-foreground/90">
+            {task.feature}
           </span>
-          {task.feature && (
-            <Badge variant="secondary" className="text-xs px-2 py-0.5 font-normal transition-colors">
-              {task.feature}
-            </Badge>
-          )}
-        </div>
+        )}
       </CardHeader>
-      <CardContent className="pb-3 px-4 pt-0">
-        <p className="text-sm font-medium line-clamp-2 mb-2 leading-relaxed">
+      <CardContent className="pb-3 px-4 pt-0 space-y-2">
+        <p className="text-sm font-semibold line-clamp-2 leading-snug">
           {taskTitle}
         </p>
 
-        <div className="flex items-center justify-between text-xs text-muted-foreground/60 pt-2 border-t border-border/40">
-          {task.owner && (
-            <span className="truncate max-w-[80px]">{task.owner}</span>
-          )}
-          {!task.owner && <span />}
+        <div className="flex items-center justify-between text-xs text-muted-foreground/60">
+          <div className="flex items-center gap-2">
+            <span className="font-mono text-[10px] tracking-wide">{taskNumber}</span>
+            {task.owner && (
+              <span className="truncate max-w-[60px]">{task.owner}</span>
+            )}
+          </div>
           {task.updated && (
             <span className="flex-shrink-0">{formatRelativeTime(task.updated)}</span>
           )}
