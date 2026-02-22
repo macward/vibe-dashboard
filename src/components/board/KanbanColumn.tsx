@@ -12,10 +12,10 @@ interface ColumnConfig {
 }
 
 export const COLUMNS: ColumnConfig[] = [
-  { status: 'pending', label: 'Pending', color: 'slate', emptyMessage: 'No hay tasks pendientes' },
-  { status: 'in-progress', label: 'In Progress', color: 'blue', emptyMessage: 'Sin tasks activas' },
-  { status: 'blocked', label: 'Blocked', color: 'red', emptyMessage: 'Sin blockers' },
-  { status: 'done', label: 'Done', color: 'green', emptyMessage: 'Sin tasks completadas' },
+  { status: 'pending', label: 'Yet to Start', color: 'amber', emptyMessage: 'No hay tasks pendientes' },
+  { status: 'in-progress', label: 'In Progress', color: 'red', emptyMessage: 'Sin tasks activas' },
+  { status: 'blocked', label: 'Blocked', color: 'slate', emptyMessage: 'Sin blockers' },
+  { status: 'done', label: 'Complete', color: 'green', emptyMessage: 'Sin tasks completadas' },
 ]
 
 interface KanbanColumnProps {
@@ -43,33 +43,28 @@ export function KanbanColumn({
     <div className="flex flex-col flex-1 min-w-0">
       <div
         className={cn(
-          'flex items-center justify-between px-3 py-2 rounded-t-lg transition-colors',
-          color === 'slate' && 'bg-slate-100 dark:bg-slate-800',
-          color === 'blue' && 'bg-blue-100 dark:bg-blue-900/30',
-          color === 'red' && 'bg-red-100 dark:bg-red-900/30',
-          color === 'green' && 'bg-green-100 dark:bg-green-900/30'
+          'flex items-center gap-2 px-3 py-2.5 rounded-t-lg transition-colors',
+          color === 'amber' && 'bg-amber-100/50 dark:bg-amber-900/20',
+          color === 'red' && 'bg-red-100/50 dark:bg-red-900/20',
+          color === 'slate' && 'bg-slate-100 dark:bg-slate-800/50',
+          color === 'green' && 'bg-green-100/50 dark:bg-green-900/20'
         )}
       >
-        <h3
-          className={cn(
-            'font-semibold text-sm',
-            color === 'slate' && 'text-slate-700 dark:text-slate-300',
-            color === 'blue' && 'text-blue-700 dark:text-blue-300',
-            color === 'red' && 'text-red-700 dark:text-red-300',
-            color === 'green' && 'text-green-700 dark:text-green-300'
-          )}
-        >
-          {label}
-        </h3>
+        {/* Dot indicator */}
         <span
           className={cn(
-            'text-xs font-medium px-2 py-0.5 rounded-full transition-all',
-            color === 'slate' && 'bg-slate-200 text-slate-600 dark:bg-slate-700 dark:text-slate-300',
-            color === 'blue' && 'bg-blue-200 text-blue-600 dark:bg-blue-800 dark:text-blue-300',
-            color === 'red' && 'bg-red-200 text-red-600 dark:bg-red-800 dark:text-red-300',
-            color === 'green' && 'bg-green-200 text-green-600 dark:bg-green-800 dark:text-green-300'
+            'w-2.5 h-2.5 rounded-full flex-shrink-0',
+            color === 'amber' && 'bg-amber-500',
+            color === 'red' && 'bg-red-500',
+            color === 'slate' && 'bg-slate-400 dark:bg-slate-500',
+            color === 'green' && 'bg-green-500'
           )}
-        >
+        />
+        {/* Label + count */}
+        <h3 className="font-medium text-sm text-foreground">
+          {label}
+        </h3>
+        <span className="text-sm text-muted-foreground">
           {tasks.length}
         </span>
       </div>
@@ -78,7 +73,7 @@ export function KanbanColumn({
         ref={setNodeRef}
         className={cn(
           'flex-1 bg-muted/30 rounded-b-lg p-2.5 space-y-2.5 min-h-[200px] transition-all duration-200',
-          isOver && 'bg-muted/60 ring-2 ring-primary/50 scale-[1.01]'
+          isOver && 'bg-muted/50 ring-2 ring-primary/50 scale-[1.01]'
         )}
       >
         {isLoading ? (
