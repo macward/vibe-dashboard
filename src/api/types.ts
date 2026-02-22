@@ -7,6 +7,7 @@ export interface Task {
   owner: string | null
   updated: string | null
   feature: string | null
+  objective: string | null
 }
 
 export interface TaskDetail {
