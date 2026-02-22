@@ -1,0 +1,12 @@
+services:
+  dashboard:
+    build:
+      context: .
+      args:
+        VITE_API_BASE_URL: ${VITE_API_BASE_URL:-http://localhost:8288}
+        VITE_API_TOKEN: ${VITE_API_TOKEN:-}
+        VITE_POLLING_INTERVAL: ${VITE_POLLING_INTERVAL:-10000}
+    ports:
+      - "4000:8080"
+    restart: unless-stopped
+    user: "1000:1000"
