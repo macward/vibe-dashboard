@@ -1,8 +1,13 @@
 import { apiClient } from './client'
 import type { Task, TaskDetail, TaskStatus } from './types'
 
+interface TasksResponse {
+  tasks: Task[]
+}
+
 export async function getTasks(project: string): Promise<Task[]> {
-  return apiClient<Task[]>(`/projects/${project}/tasks`)
+  const data = await apiClient<TasksResponse>(`/projects/${project}/tasks`)
+  return data.tasks
 }
 
 export async function getTask(project: string, filename: string): Promise<TaskDetail> {

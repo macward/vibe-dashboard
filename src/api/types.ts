@@ -7,10 +7,11 @@ export interface Task {
   owner: string | null
   updated: string | null
   feature: string | null
-  project_name: string
 }
 
-export interface TaskDetail extends Task {
+export interface TaskDetail {
+  filename: string
+  path: string
   content: string
   metadata: Record<string, unknown>
 }
