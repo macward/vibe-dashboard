@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { Sidebar } from '@/components/sidebar/Sidebar'
 import { Header } from '@/components/header/Header'
 import { KanbanBoard } from '@/components/board/KanbanBoard'
 import { TaskDetailPanel } from '@/components/detail/TaskDetailPanel'
@@ -20,6 +21,7 @@ function App() {
   const [optimisticTasks, setOptimisticTasks] = useState<Task[] | null>(null)
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
   const [pollingInterval, setPollingInterval] = useState(10000)
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
 
   const {
     tasks: fetchedTasks,
@@ -91,41 +93,54 @@ function App() {
   const allFeatures = [...new Set(fetchedTasks.map((t) => t.feature).filter(Boolean))] as string[]
 
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <Header
+    <div className="h-screen bg-background flex overflow-hidden">
+      {/* Sidebar */}
+      <Sidebar
         projects={projects}
         selectedProject={selectedProject}
         onSelectProject={setSelectedProject}
-        projectsLoading={projectsLoading}
-        features={allFeatures}
-        selectedFeature={featureFilter}
-        onSelectFeature={setFeatureFilter}
-        onNewTask={() => setCreateOpen(true)}
-        pollingInterval={pollingInterval}
-        onPollingIntervalChange={handlePollingIntervalChange}
-        isPolling={isPolling}
-        isLoading={tasksLoading}
-        lastFetch={lastFetch}
-        onRefresh={refresh}
-        isDark={isDark}
-        onToggleTheme={toggleTheme}
-        totalTasks={tasks.length}
+        isLoading={projectsLoading}
+        collapsed={sidebarCollapsed}
+        onToggleCollapse={() => setSidebarCollapsed(!sidebarCollapsed)}
       />
 
-      <main className="flex-1 overflow-hidden flex flex-col board-bg">
-        {(error || errorMessage) && (
-          <div className="p-3 md:p-4 bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-400 text-sm animate-in slide-in-from-top duration-200">
-            Error: {errorMessage || error?.message}
-          </div>
-        )}
-
-        <KanbanBoard
-          tasks={tasks}
-          onTaskClick={handleTaskClick}
-          onStatusChange={handleStatusChange}
+      {/* Main content */}
+      <div className="flex-1 flex flex-col min-w-0">
+        <Header
+          projects={projects}
+          selectedProject={selectedProject}
+          onSelectProject={setSelectedProject}
+          projectsLoading={projectsLoading}
+          features={allFeatures}
+          selectedFeature={featureFilter}
+          onSelectFeature={setFeatureFilter}
+          onNewTask={() => setCreateOpen(true)}
+          pollingInterval={pollingInterval}
+          onPollingIntervalChange={handlePollingIntervalChange}
+          isPolling={isPolling}
           isLoading={tasksLoading}
+          lastFetch={lastFetch}
+          onRefresh={refresh}
+          isDark={isDark}
+          onToggleTheme={toggleTheme}
+          totalTasks={tasks.length}
         />
-      </main>
+
+        <main className="flex-1 overflow-hidden flex flex-col board-bg">
+          {(error || errorMessage) && (
+            <div className="p-3 md:p-4 bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-400 text-sm animate-in slide-in-from-top duration-200">
+              Error: {errorMessage || error?.message}
+            </div>
+          )}
+
+          <KanbanBoard
+            tasks={tasks}
+            onTaskClick={handleTaskClick}
+            onStatusChange={handleStatusChange}
+            isLoading={tasksLoading}
+          />
+        </main>
+      </div>
 
       <TaskDetailPanel
         task={selectedTask}

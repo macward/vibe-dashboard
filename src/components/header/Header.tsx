@@ -1,10 +1,9 @@
-import { ProjectSelector } from './ProjectSelector'
 import { FeatureFilter } from './FeatureFilter'
 import { PollingControl } from './PollingControl'
 import { ThemeToggle } from './ThemeToggle'
 import { Button } from '@/components/ui/button'
 import type { Project } from '@/api/types'
-import { Plus, Menu, Search } from 'lucide-react'
+import { Plus, Search } from 'lucide-react'
 
 interface HeaderProps {
   projects: Project[]
@@ -48,11 +47,8 @@ export function Header({
   return (
     <>
       {/* Main Header */}
-      <header className="flex items-center justify-between px-4 pt-6 pb-2 bg-background border-b border-border">
+      <header className="flex items-center justify-between px-4 pt-5 pb-2 bg-background border-b border-border">
         <div className="flex items-center gap-3">
-          <button className="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-muted transition-colors">
-            <Menu className="h-5 w-5 text-muted-foreground" />
-          </button>
           <h1 className="text-xl font-bold tracking-tight">
             {selectedProject || 'Vibe Dashboard'}
           </h1>
@@ -68,14 +64,6 @@ export function Header({
       {/* Stats / Filter Bar */}
       <div className="flex items-center justify-between px-4 py-3 bg-background border-b border-border overflow-x-auto hide-scrollbar">
         <div className="flex items-center gap-2">
-          {/* Project Selector as pill */}
-          <ProjectSelector
-            projects={projects}
-            selectedProject={selectedProject}
-            onSelectProject={onSelectProject}
-            isLoading={projectsLoading}
-          />
-
           {/* Task count pill */}
           <div className="flex items-center gap-1.5 rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
             {totalTasks} Tasks
