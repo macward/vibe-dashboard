@@ -1,22 +1,10 @@
 import { useDroppable } from '@dnd-kit/core'
-import type { Task, TaskStatus } from '@/api/types'
+import type { Task } from '@/api/types'
 import { TaskCard } from './TaskCard'
 import { TaskCardSkeleton } from './TaskCardSkeleton'
 import { cn } from '@/lib/utils'
-
-interface ColumnConfig {
-  status: TaskStatus
-  label: string
-  color: string
-  emptyMessage: string
-}
-
-export const COLUMNS: ColumnConfig[] = [
-  { status: 'pending', label: 'Yet to Start', color: 'amber', emptyMessage: 'No hay tasks pendientes' },
-  { status: 'in-progress', label: 'In Progress', color: 'red', emptyMessage: 'Sin tasks activas' },
-  { status: 'blocked', label: 'Blocked', color: 'slate', emptyMessage: 'Sin blockers' },
-  { status: 'done', label: 'Complete', color: 'green', emptyMessage: 'Sin tasks completadas' },
-]
+import { Plus } from 'lucide-react'
+import type { ColumnConfig } from './columns'
 
 interface KanbanColumnProps {
   config: ColumnConfig
@@ -40,40 +28,45 @@ export function KanbanColumn({
   })
 
   return (
-    <div className="flex flex-col flex-1 min-w-0">
-      <div
-        className={cn(
-          'flex items-center gap-2 px-3 py-2.5 rounded-t-lg transition-colors',
-          color === 'amber' && 'bg-amber-100/50 dark:bg-amber-900/20',
-          color === 'red' && 'bg-red-100/50 dark:bg-red-900/20',
-          color === 'slate' && 'bg-slate-100 dark:bg-slate-800/50',
-          color === 'green' && 'bg-green-100/50 dark:bg-green-900/20'
-        )}
-      >
-        {/* Dot indicator */}
-        <span
-          className={cn(
-            'w-2.5 h-2.5 rounded-full flex-shrink-0',
-            color === 'amber' && 'bg-amber-500',
-            color === 'red' && 'bg-red-500',
-            color === 'slate' && 'bg-slate-400 dark:bg-slate-500',
-            color === 'green' && 'bg-green-500'
-          )}
-        />
-        {/* Label + count */}
-        <h3 className="font-medium text-sm text-foreground">
-          {label}
-        </h3>
-        <span className="text-sm text-muted-foreground">
-          {tasks.length}
-        </span>
+    <section className="kanban-column flex flex-col h-full">
+      {/* Column Header */}
+      <div className="flex items-center justify-between mb-4 px-1">
+        <div className="flex items-center gap-2">
+          <h2
+            className={cn(
+              'text-sm font-bold uppercase tracking-wider',
+              color === 'slate' && 'text-slate-500 dark:text-slate-400',
+              color === 'primary' && 'text-primary',
+              color === 'rose' && 'text-rose-500',
+              color === 'emerald' && 'text-emerald-500'
+            )}
+          >
+            {label}
+          </h2>
+          <span
+            className={cn(
+              'rounded-full px-2 py-0.5 text-[10px] font-bold',
+              color === 'slate' && 'bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400',
+              color === 'primary' && 'bg-primary/20 text-primary border border-primary/30',
+              color === 'rose' && 'bg-rose-500/20 text-rose-500 border border-rose-500/30',
+              color === 'emerald' && 'bg-emerald-500/20 text-emerald-500 border border-emerald-500/30'
+            )}
+          >
+            {tasks.length}
+          </span>
+        </div>
+        <button className="text-slate-400 hover:text-primary transition-colors">
+          <Plus className="h-4 w-4" />
+        </button>
       </div>
 
+      {/* Column Content */}
       <div
         ref={setNodeRef}
         className={cn(
-          'flex-1 bg-muted/30 rounded-b-lg p-2.5 space-y-2.5 min-h-[200px] transition-all duration-200',
-          isOver && 'bg-muted/50 ring-2 ring-primary/50 scale-[1.01]'
+          'flex-1 overflow-y-auto space-y-3 pr-1 hide-scrollbar transition-all duration-200',
+          color === 'emerald' && 'opacity-60',
+          isOver && 'ring-2 ring-primary/50 rounded-xl'
         )}
       >
         {isLoading ? (
@@ -96,6 +89,6 @@ export function KanbanColumn({
           ))
         )}
       </div>
-    </div>
+    </section>
   )
 }

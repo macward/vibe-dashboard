@@ -26,7 +26,8 @@ export function ProjectSelector({
       onValueChange={onSelectProject}
       disabled={isLoading}
     >
-      <SelectTrigger className="w-[200px]">
+      <SelectTrigger className="h-auto w-auto gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary border border-primary/20 hover:bg-primary/20 transition-colors">
+        <span className="size-1.5 rounded-full bg-primary" />
         <SelectValue placeholder={isLoading ? 'Loading...' : 'Select project'} />
       </SelectTrigger>
       <SelectContent>

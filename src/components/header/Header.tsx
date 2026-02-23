@@ -4,7 +4,7 @@ import { PollingControl } from './PollingControl'
 import { ThemeToggle } from './ThemeToggle'
 import { Button } from '@/components/ui/button'
 import type { Project } from '@/api/types'
-import { Plus } from 'lucide-react'
+import { Plus, Menu, Search } from 'lucide-react'
 
 interface HeaderProps {
   projects: Project[]
@@ -23,6 +23,7 @@ interface HeaderProps {
   onRefresh: () => void
   isDark: boolean
   onToggleTheme: () => void
+  totalTasks?: number
 }
 
 export function Header({
@@ -42,12 +43,45 @@ export function Header({
   onRefresh,
   isDark,
   onToggleTheme,
+  totalTasks = 0,
 }: HeaderProps) {
   return (
-    <header className="border-b px-4 md:px-6 py-3 md:py-4 sticky top-0 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/80 z-10">
-      <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <h1 className="text-xl md:text-2xl font-bold">Vibe Dashboard</h1>
-        <div className="flex flex-wrap items-center gap-2 md:gap-3">
+    <>
+      {/* Main Header */}
+      <header className="flex items-center justify-between px-4 pt-6 pb-2 bg-background border-b border-border">
+        <div className="flex items-center gap-3">
+          <button className="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-muted transition-colors">
+            <Menu className="h-5 w-5 text-muted-foreground" />
+          </button>
+          <h1 className="text-xl font-bold tracking-tight">
+            {selectedProject || 'Vibe Dashboard'}
+          </h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <button className="flex h-10 w-10 items-center justify-center rounded-lg hover:bg-muted transition-colors text-primary">
+            <Search className="h-5 w-5" />
+          </button>
+          <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
+        </div>
+      </header>
+
+      {/* Stats / Filter Bar */}
+      <div className="flex items-center justify-between px-4 py-3 bg-background border-b border-border overflow-x-auto hide-scrollbar">
+        <div className="flex items-center gap-2">
+          {/* Project Selector as pill */}
+          <ProjectSelector
+            projects={projects}
+            selectedProject={selectedProject}
+            onSelectProject={onSelectProject}
+            isLoading={projectsLoading}
+          />
+
+          {/* Task count pill */}
+          <div className="flex items-center gap-1.5 rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+            {totalTasks} Tasks
+          </div>
+
+          {/* Polling indicator */}
           <PollingControl
             pollingInterval={pollingInterval}
             onIntervalChange={onPollingIntervalChange}
@@ -56,27 +90,27 @@ export function Header({
             lastFetch={lastFetch}
             onRefresh={onRefresh}
           />
-          <div className="hidden md:block w-px h-6 bg-border" />
-          <ProjectSelector
-            projects={projects}
-            selectedProject={selectedProject}
-            onSelectProject={onSelectProject}
-            isLoading={projectsLoading}
-          />
+        </div>
+
+        <div className="flex items-center gap-2 shrink-0 ml-4">
           <FeatureFilter
             features={features}
             selectedFeature={selectedFeature}
             onSelectFeature={onSelectFeature}
           />
+
           {onNewTask && (
-            <Button onClick={onNewTask} size="sm" className="ml-auto md:ml-0">
-              <Plus className="h-4 w-4 md:mr-1" />
-              <span className="hidden md:inline">New Task</span>
+            <Button
+              onClick={onNewTask}
+              size="sm"
+              className="rounded-full bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/30"
+            >
+              <Plus className="h-4 w-4" />
+              <span className="ml-1 hidden sm:inline">New</span>
             </Button>
           )}
-          <ThemeToggle isDark={isDark} onToggle={onToggleTheme} />
         </div>
       </div>
-    </header>
+    </>
   )
 }

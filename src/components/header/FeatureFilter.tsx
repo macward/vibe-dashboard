@@ -5,6 +5,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Filter } from 'lucide-react'
 
 interface FeatureFilterProps {
   features: string[]
@@ -24,8 +25,9 @@ export function FeatureFilter({
       value={selectedFeature || 'all'}
       onValueChange={(value) => onSelectFeature(value === 'all' ? null : value)}
     >
-      <SelectTrigger className="w-[160px]">
-        <SelectValue placeholder="All features" />
+      <SelectTrigger className="h-auto w-auto gap-1 rounded-full bg-transparent px-3 py-1 text-xs font-semibold text-primary border-0 hover:bg-primary/10 transition-colors">
+        <Filter className="h-3 w-3" />
+        <SelectValue placeholder="Filters" />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="all">All features</SelectItem>

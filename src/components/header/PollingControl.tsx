@@ -5,7 +5,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Button } from '@/components/ui/button'
 import { RefreshCw, Loader2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -22,52 +21,34 @@ const INTERVALS = [
   { value: 5000, label: '5s' },
   { value: 10000, label: '10s' },
   { value: 30000, label: '30s' },
-  { value: 0, label: 'Manual' },
+  { value: 0, label: 'Off' },
 ]
-
-function formatTimeSince(date: Date | null): string {
-  if (!date) return ''
-  const now = new Date()
-  const diffSecs = Math.floor((now.getTime() - date.getTime()) / 1000)
-  if (diffSecs < 5) return 'just now'
-  if (diffSecs < 60) return `${diffSecs}s ago`
-  const diffMins = Math.floor(diffSecs / 60)
-  return `${diffMins}m ago`
-}
 
 export function PollingControl({
   pollingInterval,
   onIntervalChange,
   isPolling,
   isLoading,
-  lastFetch,
   onRefresh,
 }: PollingControlProps) {
   return (
-    <div className="flex items-center gap-2">
-      {/* Status indicator */}
-      <div className="flex items-center gap-1.5">
-        {isLoading ? (
-          <Loader2 className="h-3 w-3 animate-spin text-muted-foreground" />
-        ) : (
-          <span
-            className={cn(
-              'h-2 w-2 rounded-full',
-              isPolling ? 'bg-green-500 animate-pulse' : 'bg-gray-400'
-            )}
-          />
-        )}
-        <span className="text-xs text-muted-foreground">
-          {lastFetch ? formatTimeSince(lastFetch) : ''}
-        </span>
-      </div>
-
-      {/* Interval selector */}
+    <div className="flex items-center gap-1">
+      {/* Status indicator + interval selector combined */}
       <Select
         value={String(pollingInterval)}
         onValueChange={(v) => onIntervalChange(Number(v))}
       >
-        <SelectTrigger className="w-[80px] h-8 text-xs">
+        <SelectTrigger className="h-auto w-auto gap-1.5 rounded-full bg-slate-100 dark:bg-slate-800 px-3 py-1 text-xs font-medium text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+          {isLoading ? (
+            <Loader2 className="h-3 w-3 animate-spin" />
+          ) : (
+            <span
+              className={cn(
+                'size-1.5 rounded-full',
+                isPolling ? 'bg-emerald-500' : 'bg-slate-400'
+              )}
+            />
+          )}
           <SelectValue />
         </SelectTrigger>
         <SelectContent>
@@ -80,15 +61,13 @@ export function PollingControl({
       </Select>
 
       {/* Manual refresh button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="h-8 w-8"
+      <button
         onClick={onRefresh}
         disabled={isLoading}
+        className="flex h-6 w-6 items-center justify-center rounded-full text-slate-400 hover:text-primary hover:bg-primary/10 transition-colors disabled:opacity-50"
       >
-        <RefreshCw className={cn('h-4 w-4', isLoading && 'animate-spin')} />
-      </Button>
+        <RefreshCw className={cn('h-3 w-3', isLoading && 'animate-spin')} />
+      </button>
     </div>
   )
 }

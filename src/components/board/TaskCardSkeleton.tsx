@@ -1,22 +1,24 @@
-import { Card, CardContent, CardHeader } from '@/components/ui/card'
-
 export function TaskCardSkeleton() {
   return (
-    <Card className="animate-pulse py-0 gap-0 rounded-2xl">
-      <CardHeader className="pb-2 pt-3 px-4">
-        <div className="flex items-start justify-between gap-2">
-          <div className="h-4 w-8 bg-muted rounded" />
-          <div className="h-4 w-12 bg-muted rounded" />
-        </div>
-      </CardHeader>
-      <CardContent className="pb-3 px-4 pt-0">
-        <div className="h-4 w-full bg-muted rounded mb-2" />
-        <div className="h-4 w-3/4 bg-muted rounded mb-3" />
-        <div className="flex items-center justify-between">
-          <div className="h-3 w-12 bg-muted rounded" />
-          <div className="h-3 w-16 bg-muted rounded" />
-        </div>
-      </CardContent>
-    </Card>
+    <div className="animate-pulse rounded-xl bg-card p-4 border border-border shadow-sm">
+      {/* Category tag skeleton */}
+      <div className="mb-2">
+        <div className="h-5 w-16 bg-muted rounded-lg" />
+      </div>
+
+      {/* Title skeleton */}
+      <div className="h-4 w-full bg-muted rounded mb-1" />
+      <div className="h-4 w-3/4 bg-muted rounded mb-3" />
+
+      {/* Description skeleton */}
+      <div className="h-3 w-full bg-muted rounded mb-1" />
+      <div className="h-3 w-2/3 bg-muted rounded mb-3" />
+
+      {/* Tags skeleton */}
+      <div className="flex gap-1.5">
+        <div className="h-5 w-12 bg-muted rounded-md" />
+        <div className="h-5 w-16 bg-muted rounded-md" />
+      </div>
+    </div>
   )
 }

@@ -109,11 +109,12 @@ function App() {
         onRefresh={refresh}
         isDark={isDark}
         onToggleTheme={toggleTheme}
+        totalTasks={tasks.length}
       />
 
-      <main className="flex-1 overflow-hidden flex flex-col">
+      <main className="flex-1 overflow-hidden flex flex-col board-bg">
         {(error || errorMessage) && (
-          <div className="p-3 md:p-4 bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-400 text-sm animate-in slide-in-from-top duration-200">
+          <div className="p-3 md:p-4 bg-rose-50 text-rose-700 dark:bg-rose-900/20 dark:text-rose-400 text-sm animate-in slide-in-from-top duration-200">
             Error: {errorMessage || error?.message}
           </div>
         )}
