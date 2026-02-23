@@ -107,10 +107,7 @@ function App() {
       {/* Main content */}
       <div className="flex-1 flex flex-col min-w-0">
         <Header
-          projects={projects}
           selectedProject={selectedProject}
-          onSelectProject={setSelectedProject}
-          projectsLoading={projectsLoading}
           features={allFeatures}
           selectedFeature={featureFilter}
           onSelectFeature={setFeatureFilter}

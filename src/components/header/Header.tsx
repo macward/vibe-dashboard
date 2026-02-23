@@ -2,14 +2,10 @@ import { FeatureFilter } from './FeatureFilter'
 import { PollingControl } from './PollingControl'
 import { ThemeToggle } from './ThemeToggle'
 import { Button } from '@/components/ui/button'
-import type { Project } from '@/api/types'
 import { Plus, Search } from 'lucide-react'
 
 interface HeaderProps {
-  projects: Project[]
   selectedProject: string | null
-  onSelectProject: (project: string) => void
-  projectsLoading?: boolean
   features: string[]
   selectedFeature: string | null
   onSelectFeature: (feature: string | null) => void
@@ -26,10 +22,7 @@ interface HeaderProps {
 }
 
 export function Header({
-  projects,
   selectedProject,
-  onSelectProject,
-  projectsLoading,
   features,
   selectedFeature,
   onSelectFeature,
