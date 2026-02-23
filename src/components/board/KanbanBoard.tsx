@@ -1,6 +1,7 @@
 import { DndContext, DragOverlay, closestCorners } from '@dnd-kit/core'
 import type { Task, TaskStatus } from '@/api/types'
-import { KanbanColumn, COLUMNS } from './KanbanColumn'
+import { KanbanColumn } from './KanbanColumn'
+import { COLUMNS } from './columns'
 import { TaskCard } from './TaskCard'
 import { useDragAndDrop } from '@/hooks/useDragAndDrop'
 
@@ -41,7 +42,7 @@ export function KanbanBoard({
       onDragEnd={handleDragEnd}
       onDragCancel={handleDragCancel}
     >
-      <div className="flex gap-3 md:gap-4 p-3 md:p-4 pb-6 h-full">
+      <div className="flex gap-4 p-4 h-full overflow-x-auto hide-scrollbar">
         {COLUMNS.map((config) => (
           <KanbanColumn
             key={config.status}
