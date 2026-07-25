@@ -3,7 +3,7 @@
 Dashboard kanban web que consume el API REST de vibeMCP. Muestra tasks organizadas por status, permite drag & drop para cambiar status, y crear tasks nuevas.
 
 branch: main
-vibe: vibe-dashboard
+meridian-project: vibe-dashboard
 
 ## Stack
 
