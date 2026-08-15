@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom'
 import { cn } from '@/lib/utils'
 import type { Project } from '@/api/types'
 import {
@@ -25,6 +26,8 @@ export function Sidebar({
   collapsed = false,
   onToggleCollapse,
 }: SidebarProps) {
+  const navigate = useNavigate()
+
   return (
     <aside
       className={cn(
@@ -110,6 +113,7 @@ export function Sidebar({
           icon={<Settings className="h-5 w-5" />}
           label="Settings"
           collapsed={collapsed}
+          onClick={() => navigate('/settings')}
         />
         <NavItem
           icon={<User className="h-5 w-5" />}

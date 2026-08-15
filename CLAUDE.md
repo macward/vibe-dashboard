@@ -17,8 +17,9 @@ meridian-project: vibe-dashboard
 
 ```
 src/
-├── main.tsx                    # Entry point
-├── App.tsx                     # Root: estado global, DndContext, layout
+├── main.tsx                    # Entry point, envuelve <AppRoutes /> con <BrowserRouter>
+├── routes.tsx                  # <Routes>: "/" → App (kanban), "/settings/*" → SettingsLayout
+├── App.tsx                     # Root del kanban: estado global, DndContext, layout
 ├── api/
 │   ├── client.ts               # Fetch wrapper con auth y base URL
 │   ├── projects.ts             # GET /projects
@@ -36,8 +37,17 @@ src/
 │   │   └── TaskCard.tsx        # Card draggable (task individual)
 │   ├── detail/
 │   │   └── TaskDetailPanel.tsx # Panel lateral slide-in
-│   └── create/
-│       └── CreateTaskDialog.tsx # Modal de creación
+│   ├── create/
+│   │   └── CreateTaskDialog.tsx # Modal de creación
+│   └── settings/
+│       ├── SettingsLayout.tsx  # Layout de /settings: sidebar + <Outlet />, link de vuelta a "/"
+│       └── SettingsSidebar.tsx # NavLink a las 4 sub-secciones, resalta la activa
+├── pages/
+│   └── settings/
+│       ├── ProfilePage.tsx        # Placeholder: Perfil y cuenta
+│       ├── NotificationsPage.tsx  # Placeholder: Notificaciones
+│       ├── SecurityPage.tsx       # Placeholder: Seguridad y acceso
+│       └── WorkspacePage.tsx      # Placeholder: Workspace
 ├── hooks/
 │   ├── useTasks.ts             # Fetch + polling + cache
 │   ├── useProjects.ts          # Fetch lista de proyectos
@@ -126,7 +136,7 @@ npm run type-check   # TypeScript sin emit
 
 ## Decisiones técnicas
 
-- **Sin router** — es una sola página, no necesita react-router
+- **react-router-dom para Settings** — el dashboard sigue siendo casi todo una sola página (`/`), pero `/settings/*` necesita rutas propias (perfil, notificaciones, seguridad, workspace) con sidebar y sub-navegación, así que se introdujo react-router en vez de manejar esas 4 vistas con estado local
 - **Sin store global** — estado en hooks, no Redux/Zustand
 - **Sin SSR** — SPA puro, Vite sin Next.js
 - **@dnd-kit sobre react-beautiful-dnd** — mejor mantenido, más flexible, accesible
